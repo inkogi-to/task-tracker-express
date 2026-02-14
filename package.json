@@ -2,9 +2,9 @@
   "name": "task-tracker-express",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "start": "nodemon src/index.ts",
+    "start": "dotenv -- nodemon src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,9 +19,13 @@
   "homepage": "https://github.com/inkogi-to/task-tracker-express#readme",
   "devDependencies": {
     "@types/express": "^5.0.6",
+    "dotenv-cli": "^11.0.0",
     "nodemon": "^3.1.11",
     "prettier": "^3.8.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }
