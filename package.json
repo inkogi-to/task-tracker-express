@@ -1,0 +1,27 @@
+{
+  "name": "task-tracker-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inkogi-to/task-tracker-express.git"
+  },
+  "author": "Nazar Kobernyk",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/inkogi-to/task-tracker-express/issues"
+  },
+  "homepage": "https://github.com/inkogi-to/task-tracker-express#readme",
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "nodemon": "^3.1.11",
+    "prettier": "^3.8.1",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
