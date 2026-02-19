@@ -1,28 +1,67 @@
-import express, { Response, Request } from 'express';
+import express, { Response, Request, Router } from 'express';
 import { Card, CreateCardRequest, GetCardsResponse } from '../types/cards';
 import { IdParams } from '../types/common';
+import {
+  createdCard,
+  deleteCard,
+  getAllCards,
+  getOneCard,
+  updateCard,
+} from '../database/cards-repository';
+import { randomUUID } from 'crypto';
 
-
-export const cardsRouter = express.Router();
+export const cardsRouter: Router = express.Router();
 
 cardsRouter.get(
   '/',
-  (req: Request<{}, {}>, res: Response<GetCardsResponse>) => {},
+  async (req: Request<{}, {}>, res: Response<GetCardsResponse>) => {
+    const cards = await getAllCards();
+    res.send(cards);
+  },
 );
 
 cardsRouter.get(
   '/:id',
-  (req: Request<IdParams, {}>, res: Response<Card>) => {},
+  async (req: Request<IdParams, {}>, res: Response<Card>) => {
+    const card = await getOneCard(req.params.id);
+
+    if (!card) {
+      res.sendStatus(404);
+      return;
+    }
+
+    res.send(card);
+  },
 );
 
 cardsRouter.post(
   '/',
-  (req: Request<{}, CreateCardRequest>, res: Response<Card>) => {},
+  async (req: Request<{}, Card, CreateCardRequest>, res: Response<Card>) => {
+    const card: Card = {
+      text: req.body.text,
+      id: randomUUID(),
+    };
+    await createdCard(card);
+    res.send(card);
+  },
 );
 
 cardsRouter.put(
   '/:id',
-  (req: Request<IdParams, Card>, res: Response<Card>) => {},
+  async (
+    req: Request<IdParams, Card, CreateCardRequest>,
+    res: Response<Card>,
+  ) => {
+    const card: Card = {
+      text: req.body.text,
+      id: req.params.id,
+    };
+    await updateCard(card);
+    res.send(card);
+  },
 );
 
-cardsRouter.delete('/:id', (req: Request<IdParams>, res: Response<void>) => {});
+cardsRouter.delete('/:id', async (req: Request<IdParams>, res: Response<void>) => {
+  await deleteCard(req.params.id);
+  res.sendStatus(204);
+});
